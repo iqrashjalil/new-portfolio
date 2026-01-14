@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
@@ -10,7 +11,17 @@ import Footer from './components/Footer';
 import FloatingLogosBackground from './components/FloatingLogosBackground';
 import CursorGlow from './components/CursorGlow';
 
-const App: React.FC = () => {
+// Admin components
+import { LoginForm } from './components/admin/LoginForm';
+import { AdminLayout } from './components/admin/AdminLayout';
+import { ProtectedRoute } from './components/admin/ProtectedRoute';
+import { DashboardTab } from './components/admin/DashboardTab';
+import { ContentTab } from './components/admin/ContentTab';
+import { SettingsTab } from './components/admin/SettingsTab';
+import ProjectsPage from './components/admin/ProjectsPage';
+import SkillsPage from './components/admin/SkillsPage';
+
+const Portfolio: React.FC = () => {
   return (
     <div className="relative overflow-x-hidden antialiased">
       <FloatingLogosBackground />
@@ -28,6 +39,32 @@ const App: React.FC = () => {
         <Footer />
       </div>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        {/* Portfolio Routes */}
+        <Route path="/*" element={<Portfolio />} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<LoginForm onSuccess={() => window.location.href = '/admin'} />} />
+        
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <AdminLayout />
+          </ProtectedRoute>
+        }>
+          <Route path="dashboard" element={<DashboardTab />} />
+          <Route path="projects" element={<ProjectsPage />} />
+          <Route path="skills" element={<SkillsPage />} />
+          <Route path="settings" element={<SettingsTab />} />
+          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 };
 

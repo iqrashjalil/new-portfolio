@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { FaCode, FaBars, FaTimes } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
 import { RiTerminalBoxFill } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,6 +112,17 @@ const Header: React.FC = () => {
 
           {/* CTA Button - Enhanced */}
           <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={() => navigate('/admin/login')}
+              className="relative px-4 py-2.5 rounded-full glass-button text-slate-300 hover:text-white transition-all duration-300 transform hover:scale-105 flex items-center gap-2 group overflow-hidden border border-white/20"
+              title="Admin Panel"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                <RiTerminalBoxFill size={18} />
+                <span className="text-sm font-medium">Admin</span>
+              </span>
+            </button>
+            
             <a
               href="#contact"
               className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold transition-all duration-300 transform hover:scale-105 flex items-center gap-2 group overflow-hidden shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-purple-500/40"
